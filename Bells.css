@@ -1,0 +1,211 @@
+.title {
+	position:absolute;
+	top:70%;
+	left:2%;
+	min-width:96%;
+	min-height:100px;
+	line-height:100px;
+	font-size:64px;
+	background-color:black;
+	color:white;
+	text-align:center;
+	border-radius:50px;
+	cursor:pointer;
+}
+.reset {
+	position:absolute;
+	margin-top:25px;
+	top:70%;
+	right:4%;
+	min-width: 5%;
+	min-height:50px;
+	line-height:50px;
+	font-size:32px;
+	background-color:white;
+	color:black;
+	text-align:center;
+	border-radius:25px;
+	cursor:pointer;
+}
+.tempo {
+	position:absolute;
+	margin-top:25px;
+	top:70%;
+	min-width: 5%;
+	min-height:50px;
+	line-height:50px;
+	font-size:32px;
+	background-color:white;
+	color:black;
+	text-align:center;
+	cursor:pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tempo_minus {
+	left:4%;
+	border-top-left-radius:25px;
+	border-bottom-left-radius:25px;
+}
+.tempo_val {
+	left:7%;
+}
+.tempo_plus {
+	left:10%;
+	border-top-right-radius:25px;
+	border-bottom-right-radius:25px;
+}
+
+.part {
+	position:absolute;
+	top:2%;
+	opacity:0.5;
+}
+.part_title {
+	display:table;
+	margin:0 auto;
+	min-height:30px;
+	line-height:30px;
+	font-size:24px;
+	background-color:black;
+	color:white;
+	text-align:center;
+	border-radius:17px;
+    padding:2px 10px 2px 10px;
+}
+.note {
+	display:block;
+	position:absolute;
+	min-height:100px;
+	line-height:100px;
+	text-align:center;
+    color:white;
+    text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
+    font-size:64px;
+    letter-spacing:5px;
+    border-radius:50px;
+}
+.guide {
+	display:block;
+	position:absolute;
+	top:85%;
+	left:4%;
+}
+.goal {
+	display:block;
+	position:absolute;
+	top:calc(55% - 12px);
+	left:2%;
+	height:120px;
+	width:96%;
+	border-color:darkblue;
+	border-style:dotted;
+	border-width:3px;
+	border-radius:55px;
+}
+.bell {
+	display:block;
+	min-height:30px;
+	line-height:30px;
+	text-align:center;
+    color:white;
+    text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
+    font-size:24px;
+    letter-spacing:2px;
+    border-radius:17px;
+    float:left;
+    margin:5px;
+    padding:2px 10px 2px 10px;
+}
+.animate {
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);	
+				
+	animation: animate 3.5s linear 0s forwards;
+	-webkit-animation: animate 3.5s linear 0s forwards;
+	-moz-animation: animate 3.5s linear 0s forwards;
+	-o-animation: animate 3.5s linear 0s forwards;
+	-ms-animation: animate 3.5s linear 0s forwards;
+}
+@keyframes animate {
+	000% {opacity: 0.5; top: -100px;}
+	040% {opacity: 0.5; top: 40%;}
+	045% {opacity: 1.0; top: 55%;}
+	070% {opacity: 1.0; top: 55%;}
+	100% {opacity: 0.0; top: 55%;}
+}
+@-webkit-keyframes animate {
+	000% {opacity: 0.5; top: -100px;}
+	040% {opacity: 0.5; top: 40%;}
+	045% {opacity: 1.0; top: 55%;}
+	070% {opacity: 1.0; top: 55%;}
+	100% {opacity: 0.0; top: 55%;}
+}	
+@-moz-keyframes animate {
+	000% {opacity: 0.5; top: -100px;}
+	040% {opacity: 0.5; top: 40%;}
+	045% {opacity: 1.0; top: 55%;}
+	070% {opacity: 1.0; top: 55%;}
+	100% {opacity: 0.0; top: 55%;}
+}	
+@-o-keyframes animate {
+	000% {opacity: 0.5; top: -100px;}
+	040% {opacity: 0.5; top: 40%;}
+	045% {opacity: 1.0; top: 55%;}
+	070% {opacity: 1.0; top: 55%;}
+	100% {opacity: 0.0; top: 55%;}
+}	
+@-ms-keyframes animate {
+	000% {opacity: 0.5; top: -100px;}
+	040% {opacity: 0.5; top: 40%;}
+	045% {opacity: 1.0; top: 55%;}
+	070% {opacity: 1.0; top: 55%;}
+	100% {opacity: 0.0; top: 55%;}
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  { 
+	.title {
+		top:75%;
+		font-size:32px;
+		min-height:50px;
+		line-height:50px;
+		border-radius:25px;
+	}
+	.tempo {
+		margin-top:12.5px;
+		top:75%;
+		min-height:25px;
+		line-height:25px;
+		font-size:16px;
+	}
+	.reset {
+		margin-top:12.5px;
+		top:75%;
+		min-height:25px;
+		line-height:25px;
+		font-size:16px;
+	}
+	.bell {
+		min-height:20px;
+		line-height:20px;
+		font-size:18px;
+	}
+	.note {
+		min-height:60px;
+		line-height:60px;
+		font-size:48px;
+	}
+	.goal {
+		top:calc(55% - 12px);
+		height:80px;
+	}
+}
