@@ -1,7 +1,3 @@
-Bells["c"].name = "Savannah";
-Bells["d"].name = "Katrina";
-Bells["e"].name = "Savannah";
-
 var Hot_Cross_Buns = [
 	{ "Melody" : [
 		{ "n": "e", "d": 1/4 },

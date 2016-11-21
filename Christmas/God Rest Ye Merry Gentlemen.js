@@ -1,17 +1,3 @@
-Bells["a low"].name = "Annaliess";
-Bells["b low"].name = "Annaliess";
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Lukas";
-Bells["d#"].name = "Clinton";
-Bells["e"].name = "Clinton";
-Bells["f#"].name = "Talitha";
-Bells["g"].name = "Talitha";
-Bells["a"].name =  "Melanie";
-Bells["b"].name = "Katrina";
-Bells["c high"].name =  "Melanie";
-Bells["d high"].name = "Katrina";
-Bells["e high"].name = "Katrina";
-
 var God_Rest_Ye_Merry_Gentlemen = [
 	{ "Harmony" : [
 		// God rest ye merry gentlemen, let nothing you dismay

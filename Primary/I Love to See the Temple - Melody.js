@@ -1,14 +1,3 @@
-Bells["c"].name = "Annaliess";
-Bells["d"].name = "Clinton";
-Bells["e"].name = "Clinton";
-Bells["f"].name = "Katrina";
-Bells["g"].name = "Talitha";
-Bells["a"].name = "Lukas";
-Bells["a#"].name = "Annaliess";
-Bells["c high"].name = "Katrina";
-Bells["d high"].name = "Savannah";
-
-
 var I_Love_to_See_the_Temple = [
 	{ "Melody" : [
 		{ "n": "c", "d": 1/4 },

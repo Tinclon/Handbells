@@ -1,14 +1,3 @@
-Bells["b low"].name = "Lydia";
-Bells["c"].name = "Talitha";
-Bells["d"].name = "Lydia";
-Bells["d#"].name = "Launa";
-Bells["e"].name = "Launa";
-Bells["f"].name = "Ella";
-Bells["g"].name = "Talitha";
-Bells["g#"].name =  "Ella";
-Bells["b"].name = "Savannah";
-Bells["c high"].name = "Savannah";
-
 var Follow_the_Prophet = [
 	{ "Harmony" : [
 		{ "n": "c", "d": 1/4 },

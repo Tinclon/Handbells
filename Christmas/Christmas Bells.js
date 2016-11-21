@@ -1,15 +1,3 @@
-Bells["a low"].name = "Annaliess";
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Lukas";
-Bells["e"].name = "Clinton";
-Bells["f#"].name = "Talitha";
-Bells["g"].name = "Talitha";
-Bells["a"].name =  "Melanie";
-Bells["b"].name = "Katrina";
-Bells["c high"].name =  "Melanie";
-Bells["d high"].name = "Katrina";
-Bells["e high"].name = "Katrina";
-
 var Christmas_Bells = [
 	{ "Harmony" : [
 		// Christmas bells are ringing

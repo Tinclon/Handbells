@@ -1,14 +1,3 @@
-Bells["c"].name = "Savannah";
-Bells["d"].name = "Lukas";
-Bells["e"].name = "Clinton";
-Bells["f"].name = "Talitha";
-Bells["g"].name = "Katrina";
-Bells["a"].name =  "Talitha";
-Bells["a#"].name =  "Lukas";
-Bells["c high"].name = "Grandma";
-Bells["c# high"].name = "Annaliess";
-Bells["d high"].name = "Annaliess";
-
 var Love_Is_Spoken_Here = [
 	{ "Boys" : [
 		{ "n": "f", "d": 1/2 },

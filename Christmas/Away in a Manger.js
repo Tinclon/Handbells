@@ -1,15 +1,3 @@
-Bells["a low"].name = "Clinton";
-Bells["a# low"].name = "Katrina";
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Savannah";
-Bells["e"].name = "Clinton";
-Bells["f"].name = "Katrina";
-Bells["g"].name = "Melanie";
-Bells["a"].name =  "Talitha";
-Bells["a#"].name =  "Annaliess";
-Bells["c high"].name = "Talitha";
-Bells["d high"].name = "Lukas";
-
 var Away_in_a_Manger = [
 	{ "Harmony" : [
 		{ "n": "c", "d": 1/4 },

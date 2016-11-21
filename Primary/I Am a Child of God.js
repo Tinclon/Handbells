@@ -1,15 +1,3 @@
-Bells["b low"].name = "Lukas";
-Bells["c"].name = "Talitha";
-Bells["c#"].name = "Launa";
-Bells["d"].name = "Lydia";
-Bells["e"].name = "Talitha";
-Bells["f"].name = "Lukas";
-Bells["f#"].name = "Ella";
-Bells["g"].name = "Launa";
-Bells["a"].name =  "Ella";
-Bells["b"].name = "Savannah";
-Bells["c high"].name = "Savannah";
-
 var I_Am_a_Child_of_God = [
 	{ "Harmony" : [
 		{ "n": "c", "d": 1/4 },

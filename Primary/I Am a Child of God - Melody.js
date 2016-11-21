@@ -1,12 +1,3 @@
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Lydia";
-Bells["e"].name = "Lukas";
-Bells["f"].name = "Annaliess";
-Bells["g"].name = "Talitha";
-Bells["a"].name =  "Ella";
-Bells["b"].name = "Launa";
-Bells["c high"].name = "Savannah";
-
 var I_Am_a_Child_of_God = [
 	{ "Melody" : [
 		{ "n": "e", "d": 1/4 },

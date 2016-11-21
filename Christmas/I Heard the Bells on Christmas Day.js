@@ -1,19 +1,3 @@
-Bells["a# low"].name = "Savannah";
-Bells["b low"].name = "Annaliess";
-Bells["c"].name = "Lukas";
-Bells["c#"].name = "Lukas";
-Bells["d"].name = "Lukas";
-Bells["d#"].name = "Lukas";
-Bells["f"].name = "Talitha";
-Bells["f#"].name = "Talitha";
-Bells["g"].name = "Talitha";
-Bells["g#"].name = "Talitha";
-Bells["a"].name =  "Melanie";
-Bells["a#"].name =  "Melanie";
-Bells["c high"].name =  "Melanie";
-Bells["d high"].name = "Katrina";
-Bells["d# high"].name = "Katrina";
-
 var I_Heard_the_Bells_on_Christmas_Day = [
 
 	{ "Harmony" : [

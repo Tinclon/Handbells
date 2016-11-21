@@ -1,15 +1,3 @@
-Bells["b low"].name = "Talitha";
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Annaliess";
-Bells["e"].name = "Savannah";
-Bells["f"].name = "Clinton";
-Bells["f#"].name = "Katrina";
-Bells["g"].name = "Lukas";
-Bells["g#"].name = "Katrina";
-Bells["a"].name =  "Clinton";
-Bells["b"].name = "Annaliess";
-Bells["c high"].name = "Savannah";
-
 var O_Canada = [
 	{ "Melody" : [
 		{ "n": "e", "d": 1/2 },

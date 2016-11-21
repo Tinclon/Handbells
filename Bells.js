@@ -16,13 +16,12 @@ var Bells = {
 	"b":		{ "color": "130,045,100", "freq": "493.88" },
 	"c high":	{ "color": "175,040,050", "freq": "523.25" },
 	"c# high":	{ "color": "245,075,110", "freq": "554.37" },
-	"d high":	{ "color": "250,120,085", "freq": "587.33" },	
-	"d# high":	{ "color": "250,145,110", "freq": "622.25" },	
+	"d high":	{ "color": "250,120,085", "freq": "587.33" },
+	"d# high":	{ "color": "250,145,110", "freq": "622.25" },
 	"e high":	{ "color": "255,240,080", "freq": "659.25" },
 };
 
 var playSounds = false;
-var useNoteNames = true;
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 var timeouts = [];
 
@@ -30,33 +29,30 @@ function Note(id, tone, color, name, freq, duration, width, left) {
     this.id = "" + id;
     this.color = color;
     this.name = name;
-    this.baseStyle = "min-width:" + width + "%;max-width:" + width + "%;z-index:" + id + ";";
-    this.baseStyle += "left:" +  left + "%;background-color:rgb(" + this.color + ");";
+    this.baseStyle = `min-width:${width}%;max-width:${width}%;z-index:${id};`;
+    this.baseStyle += `left:${left}%;background-color:rgb(${this.color});`;
 
-	this.makeAndAnimate = function() {
+	this.makeAndAnimate = () => {
 		this.make();
 		this.animate();
-	}
+	};
 	
-	this.make = function() {
+	this.make = () => {
 		//var noteWrapper = document.createElement("div");
 		//noteWrapper.setAttribute("id", "w" + this.id);
 		//noteWrapper.setAttribute("style", "position:absolute;width:100%;height:100%;")
 		
         var note = document.createElement("div");
         note.setAttribute("style", this.baseStyle);
-        note.innerHTML = this.name;
-        if (useNoteNames) {
-        	note.innerHTML = tone.toUpperCase();
-        }
+        note.innerHTML = this.name ? this.name : tone.toUpperCase();
         note.setAttribute("id", this.id);
         note.setAttribute("class", "note");
         
         //noteWrapper.appendChild(note);
         document.getElementById("canvas").appendChild(note);
-    }
+    };
 
-    this.animate = function() {
+    this.animate = () => {
     	//var noteWrapper = document.getElementById("w" + this.id);
     	//noteWrapper.setAttribute("class", "animate");
     
@@ -65,20 +61,20 @@ function Note(id, tone, color, name, freq, duration, width, left) {
         setTimeout(this.addFlair.bind(this), 1575);
         setTimeout(this.playNote.bind(this), 1575);
         setTimeout(this.erase.bind(this), 3200);
-    }
+    };
     
-    this.addFlair = function() {
+    this.addFlair = () => {
         var note = document.getElementById(this.id);
         //note.innerHTML = "&#128142; " + note.innerHTML + " &#128142;";
         setTimeout(this.removeFlair.bind(this), 300);
-    }
+    };
     
-    this.removeFlair = function() {
+    this.removeFlair = () => {
         var note = document.getElementById(this.id);
         //note.innerHTML = note.innerHTML.substring(3,note.innerHTML.length - 2);
-    }
+    };
     
-    this.playNote = function () {
+    this.playNote = () => {
 		var oscillator = audioCtx.createOscillator();
 		var gain = audioCtx.createGain();
 
@@ -92,31 +88,37 @@ function Note(id, tone, color, name, freq, duration, width, left) {
 			oscillator.start();
 			setTimeout(this.stopNote.bind(this, gain, oscillator), duration);
 		}
-    },
+    };
     
-    this.stopNote = function(gain, oscillator) {
+    this.stopNote = (gain, oscillator) => {
     	gain.gain.value = 0;
-    	setTimeout(function () { oscillator.stop(); }, 100);
-    },
+    	setTimeout(() => oscillator.stop(), 100);
+    };
     
-    this.erase = function() {
+    this.erase = () => {
         var note = document.getElementById(this.id);
     	note.parentNode.removeChild(note);
     	//var noteWrapper = document.getElementById("w" + this.id);
     	//noteWrapper.parentNode.removeChild(noteWrapper);
-    }
+    };
 }
 
 
 function Song(title, song, tempo, tempoBeat) {
-	document.getElementById("title").innerHTML = "&#128276;&nbsp;&nbsp;&nbsp;&nbsp;" + title + "&nbsp;&nbsp;&nbsp;&nbsp;&#128276;";
-	
+	document.getElementById("title").innerHTML = `&#128276;&nbsp;&nbsp;&nbsp;&nbsp;${title}&nbsp;&nbsp;&nbsp;&nbsp;&#128276;`;
+
+	var backAnchor = document.createElement("a");
+	backAnchor.setAttribute("style", "position:absolute");
+	backAnchor.setAttribute("href", "../All.html");
+	backAnchor.innerHTML = "&lt;&lt;";
+	document.body.appendChild(backAnchor);
+
 	// Read the lines and figure out note recurrence
 	var recurrence = {};
-	song.forEach(function(line, lineIndex) {
+	song.forEach(line => {
 		for (var part in line) {
 			if (line.hasOwnProperty(part)) {
-				line[part].forEach(function(note, noteIndex) {
+				line[part].forEach(note => {
 					if(note.n !== "r") {
 						if(!recurrence[note.n]) { recurrence[note.n] = 0; }
 						recurrence[note.n]++;
@@ -125,32 +127,38 @@ function Song(title, song, tempo, tempoBeat) {
 			}
 		}
 	});
-					
+
+	var getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`;// + " - &#215;" + recurrence[Bell];
+
+	var setBellName = e => {
+		Bells[e.target.id].name = prompt("Name:");
+		e.target.innerHTML = getBellDescription(e.target.id);
+	};
+
 	// Set up the Bell Guide at the bottom
 	for (var Bell in Bells) {
 		if (Bells.hasOwnProperty(Bell)) {
 			if(Bells[Bell].name || recurrence[Bell]) {
 				var bell = document.createElement("div");
-				var description = Bell + " - " + Bells[Bell].name + " - &#215;" + recurrence[Bell];
-				if (useNoteNames) {
-		        	description = Bell.toUpperCase() + " - &#215;" + recurrence[Bell];
-        		}
+				var description = getBellDescription(Bell);
+        		bell.setAttribute("id", Bell);
 				bell.setAttribute("class", "bell");
-				bell.setAttribute("style", "background-color:rgb(" + Bells[Bell].color + ");");
+				bell.setAttribute("style", `cursor:pointer;background-color:rgb(${Bells[Bell].color});`);
 				bell.innerHTML = description;
 				document.getElementById("guide").appendChild(bell);
+				document.getElementById(Bell).onclick=setBellName;
 			}
 		}
 	}
 	
 	// Set up the parts' titles
 	var lines = song.length;
-	song.forEach(function(line, lineIndex) {
+	song.forEach((line, lineIndex) => {
 		for (var part in line) {
 			if (line.hasOwnProperty(part)) {
 				var thisPart = document.createElement("div");
 				thisPart.setAttribute("class", "part");
-				thisPart.setAttribute("style", "min-width:" + (100 / lines) + "%;left:" + ((100 / lines) * lineIndex )+ "%;");
+				thisPart.setAttribute("style", `min-width:${(100 / lines)}%;left:${((100 / lines) * lineIndex)}%;`);
 				
 				var title = document.createElement("div");
 				title.setAttribute("class", "part_title");
@@ -188,15 +196,15 @@ function Song(title, song, tempo, tempoBeat) {
 	document.getElementById("canvas").appendChild(resetButton);
 	
 	// Read the lines of the song, and start playing
-	var play = function () {
+	var play = () => {
 		var lines = song.length;
-		song.forEach(function(line, lineIndex) {
+		song.forEach((line, lineIndex) => {
 			var noteOffset = 250;
 			var width = 90 / lines;
 			var left = ((lineIndex * 2) + 1) * (10 / (lines * 2)) + (width * lineIndex);
 			for (var part in line) {
 				if (line.hasOwnProperty(part)) {
-					line[part].forEach(function(note, noteIndex) {
+					line[part].forEach((note, noteIndex) => {
 						if(note.n !== "r") {
 							var songNote = new Note((lineIndex * 1000) + noteIndex, note.n, Bells[note.n].color, Bells[note.n].name, Bells[note.n].freq, (((note.d * tempoBeat) * (60 / tempo)) * 1000), width, left);
 							timeouts.push(setTimeout(songNote.makeAndAnimate.bind(songNote), noteOffset));
@@ -208,20 +216,18 @@ function Song(title, song, tempo, tempoBeat) {
 		});
 	};
 	
-	var tempoMinus = function () {
+	var tempoMinus = () => {
 		tempo = tempo - 10;
 		document.getElementById("tempoVal").innerHTML = tempo;
 	};
 
-	var tempoPlus = function () {
+	var tempoPlus = () => {
 		tempo = tempo + 10;
 		document.getElementById("tempoVal").innerHTML = tempo;
 	};
-	
-	var reset = function () {
-		timeouts.forEach(function(timeout) {
-			clearTimeout(timeout);
-		});
+
+	var reset = () => {
+		timeouts.forEach(timeout => clearTimeout(timeout));
 		timeouts = [];
 	};
 	
@@ -229,4 +235,4 @@ function Song(title, song, tempo, tempoBeat) {
 	document.getElementById("tempoMinus").onclick=tempoMinus;
 	document.getElementById("tempoPlus").onclick=tempoPlus;
 	document.getElementById("reset").onclick=reset;
-};
+}

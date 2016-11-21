@@ -1,15 +1,3 @@
-Bells["a low"].name = "Christien";
-Bells["a# low"].name = "Max"; // Max
-Bells["b low"].name = "Sterling";	// Sterling
-Bells["c"].name = "Talitha";
-Bells["d"].name = "Annaliess";
-Bells["e"].name = "Lydia";
-Bells["f"].name = "Launa";
-Bells["g"].name = "Lukas";
-Bells["a"].name =  "Ella";
-Bells["b"].name = "Dane";
-Bells["c high"].name = "Savannah";
-
 var Well_Bring_the_World_His_Truth = [
 	{ "Harmony" : [
 		{ "n": "r", "d": 1/2 + 1/4 },

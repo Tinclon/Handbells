@@ -1,17 +1,3 @@
-Bells["a low"].name = "Savannah";
-Bells["b low"].name = "Annaliess";
-Bells["c"].name = "Lukas";
-Bells["d"].name = "Lukas";
-Bells["d#"].name = "Lukas";
-Bells["e"].name = "Clinton";
-Bells["f"].name = "Talitha";
-Bells["f#"].name = "Talitha";
-Bells["g"].name = "Talitha";
-Bells["a"].name =  "Melanie";
-Bells["b"].name = "Katrina";
-Bells["c high"].name =  "Melanie";
-Bells["d high"].name = "Katrina";
-
 var Rudolph_the_Red_Nosed_Reindeer = [
 	{ "Harmony 2" : [
 		// You know dasher and dancer ...

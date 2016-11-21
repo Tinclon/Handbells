@@ -1,12 +1,3 @@
-Bells["c# high"].name = "Clinton";
-Bells["c"].name = "Savannah";
-Bells["d"].name = "Clinton";
-Bells["d high"].name = "Savannah";
-Bells["f"].name = "Clinton";
-Bells["e"].name = "Clinton";
-Bells["b"].name = "Clinton";
-Bells["a#"].name = "Clinton";
-
 var Savannahs_Song = [
 	{ "Melody" : [
 		{ "n": "c# high", "d": 1/2 },

@@ -1,19 +1,3 @@
-Bells["b low"].name = "Lukas";//
-Bells["c"].name = "Lukas";//
-Bells["c#"].name = "Clinton";//
-Bells["d"].name = "Lukas";//
-Bells["d#"].name = "Katrina";//
-Bells["e"].name = "Clinton";//
-Bells["f#"].name = "Talitha";//
-Bells["g"].name = "Talitha";//
-Bells["a"].name =  "Katrina";
-Bells["b"].name = "Annaliess";
-Bells["c high"].name = "Katrina";
-Bells["c# high"].name = "Talitha";
-Bells["d high"].name = "Savannah";
-Bells["d# high"].name = "Annaliess";
-Bells["e high"].name = "Savannah";
-
 var Carol_of_the_Bells = [
 	{ "Harmony" : [
 		{ "n": "e", "d": 1/2 + 1/4 },

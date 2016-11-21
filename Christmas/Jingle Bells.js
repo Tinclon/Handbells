@@ -1,17 +1,3 @@
-Bells["b low"].name = "Clinton";
-Bells["c"].name = "Clinton";
-Bells["c#"].name = "Lukas";
-Bells["d"].name = "Lukas";
-Bells["e"].name = "Clinton";
-Bells["f#"].name = "Katrina";
-Bells["g"].name = "Katrina";
-Bells["a"].name =  "Annaliess";
-Bells["b"].name = "Annaliess";
-Bells["c high"].name = "Talitha";
-Bells["d high"].name = "Talitha";
-Bells["e high"].name = "Annaliess";
-
-
 var Jingle_Bells = [
 	{ "Harmony 2" : [
 		{ "n": "r", "d": 2 },
