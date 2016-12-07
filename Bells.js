@@ -131,8 +131,11 @@ function Song(title, song, tempo, tempoBeat) {
 	var getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`;// + " - &#215;" + recurrence[Bell];
 
 	var setBellName = e => {
-		Bells[e.target.id].name = prompt("Name:");
-		e.target.innerHTML = getBellDescription(e.target.id);
+		var Bell = e.target.id;
+		Bells[Bell].name = prompt("Name:");
+		e.target.innerHTML = getBellDescription(Bell);
+
+		localStorage.setItem(Bell, Bells[Bell].name);
 	};
 
 	// Set up the Bell Guide at the bottom
@@ -140,6 +143,11 @@ function Song(title, song, tempo, tempoBeat) {
 		if (Bells.hasOwnProperty(Bell)) {
 			if(Bells[Bell].name || recurrence[Bell]) {
 				var bell = document.createElement("div");
+
+				if(!Bells[Bell].name) {
+					Bells[Bell].name = localStorage.getItem(Bell);
+				}
+
 				var description = getBellDescription(Bell);
         		bell.setAttribute("id", Bell);
 				bell.setAttribute("class", "bell");
