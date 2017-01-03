@@ -115,18 +115,41 @@ function Song(title, song, tempo, tempoBeat) {
 
 	// Read the lines and figure out note recurrence
 	var recurrence = {};
-	song.forEach(line => {
-		for (var part in line) {
-			if (line.hasOwnProperty(part)) {
-				line[part].forEach(note => {
-					if(note.n !== "r") {
-						if(!recurrence[note.n]) { recurrence[note.n] = 0; }
-						recurrence[note.n]++;
+	var determineNoteRecurrence = () => {
+		recurrence = {};
+		song.forEach(line => {
+			for (var part in line) {
+				if(song[part] !== false) {
+					if (line.hasOwnProperty(part)) {
+						line[part].forEach(note => {
+							if (note.n !== "r") {
+								if (!recurrence[note.n]) {
+									recurrence[note.n] = 0;
+								}
+								recurrence[note.n]++;
+							}
+						});
 					}
-				});
+				}
 			}
+		});
+	};
+	determineNoteRecurrence();
+
+	var togglePart = e => {
+		var title = e.target;
+		var part = title.id.split("_")[1];
+		song[part] = !(song[part] !== false);
+
+		if (song[part]) {
+			title.setAttribute("class", "part_title");
+		} else {
+			title.setAttribute("class", "part_title part_title_dim");
 		}
-	});
+		determineNoteRecurrence();
+		clearBellGuide();
+		setupBellGuide();
+	};
 
 	var getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`;// + " - &#215;" + recurrence[Bell];
 
@@ -138,26 +161,36 @@ function Song(title, song, tempo, tempoBeat) {
 		localStorage.setItem(Bell, Bells[Bell].name);
 	};
 
+	var clearBellGuide = () => {
+		var bellGuide = document.getElementById("guide");
+		while (bellGuide.firstChild) {
+			bellGuide.removeChild(bellGuide.firstChild);
+		}
+	};
+
 	// Set up the Bell Guide at the bottom
-	for (var Bell in Bells) {
-		if (Bells.hasOwnProperty(Bell)) {
-			if(Bells[Bell].name || recurrence[Bell]) {
-				var bell = document.createElement("div");
+	var setupBellGuide = () => {
+		for (var Bell in Bells) {
+			if (Bells.hasOwnProperty(Bell)) {
+				if (recurrence[Bell]) {
+					var bell = document.createElement("div");
 
-				if(!Bells[Bell].name) {
-					Bells[Bell].name = localStorage.getItem(Bell);
+					if (!Bells[Bell].name) {
+						Bells[Bell].name = localStorage.getItem(Bell);
+					}
+
+					var description = getBellDescription(Bell);
+					bell.setAttribute("id", Bell);
+					bell.setAttribute("class", "bell");
+					bell.setAttribute("style", `cursor:pointer;background-color:rgb(${Bells[Bell].color});`);
+					bell.innerHTML = description;
+					document.getElementById("guide").appendChild(bell);
+					document.getElementById(Bell).onclick = setBellName;
 				}
-
-				var description = getBellDescription(Bell);
-        		bell.setAttribute("id", Bell);
-				bell.setAttribute("class", "bell");
-				bell.setAttribute("style", `cursor:pointer;background-color:rgb(${Bells[Bell].color});`);
-				bell.innerHTML = description;
-				document.getElementById("guide").appendChild(bell);
-				document.getElementById(Bell).onclick=setBellName;
 			}
 		}
-	}
+	};
+	setupBellGuide();
 	
 	// Set up the parts' titles
 	var lines = song.length;
@@ -169,12 +202,15 @@ function Song(title, song, tempo, tempoBeat) {
 				thisPart.setAttribute("style", `min-width:${(100 / lines)}%;left:${((100 / lines) * lineIndex)}%;`);
 				
 				var title = document.createElement("div");
+				title.setAttribute("id", `part_${part}`);
 				title.setAttribute("class", "part_title");
+				title.setAttribute("style", "cursor:pointer;");
 				//title.setAttribute("style", "left:10px;");
 				title.innerHTML = part;
 
 				document.getElementById("canvas").appendChild(thisPart);
 				thisPart.appendChild(title);
+				document.getElementById(`part_${part}`).onclick=togglePart;
 			}
 		}
 	});
@@ -211,19 +247,21 @@ function Song(title, song, tempo, tempoBeat) {
 			var width = 90 / lines;
 			var left = ((lineIndex * 2) + 1) * (10 / (lines * 2)) + (width * lineIndex);
 			for (var part in line) {
-				if (line.hasOwnProperty(part)) {
-					line[part].forEach((note, noteIndex) => {
-						if(note.n !== "r") {
-							var songNote = new Note((lineIndex * 1000) + noteIndex, note.n, Bells[note.n].color, Bells[note.n].name, Bells[note.n].freq, (((note.d * tempoBeat) * (60 / tempo)) * 1000), width, left);
-							timeouts.push(setTimeout(songNote.makeAndAnimate.bind(songNote), noteOffset));
-						}
-						noteOffset = noteOffset + (((note.d * tempoBeat) * (60 / tempo)) * 1000);
-					});
+				if(song[part] !== false) {
+					if (line.hasOwnProperty(part)) {
+						line[part].forEach((note, noteIndex) => {
+							if (note.n !== "r") {
+								var songNote = new Note((lineIndex * 1000) + noteIndex, note.n, Bells[note.n].color, Bells[note.n].name, Bells[note.n].freq, (((note.d * tempoBeat) * (60 / tempo)) * 1000), width, left);
+								timeouts.push(setTimeout(songNote.makeAndAnimate.bind(songNote), noteOffset));
+							}
+							noteOffset = noteOffset + (((note.d * tempoBeat) * (60 / tempo)) * 1000);
+						});
+					}
 				}
 			}
 		});
 	};
-	
+
 	var tempoMinus = () => {
 		tempo = tempo - 10;
 		document.getElementById("tempoVal").innerHTML = tempo;
