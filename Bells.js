@@ -151,7 +151,7 @@ function Song(title, song, tempo, tempoBeat) {
 		setupBellGuide();
 	};
 
-	var getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`;// + " - &#215;" + recurrence[Bell];
+	var getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}` + " - &#215;" + recurrence[Bell];
 
 	var setBellName = e => {
 		var Bell = e.target.id;
