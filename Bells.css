@@ -1,3 +1,12 @@
+body {
+	background: black;
+}
+a {
+	color: lightskyblue;
+}
+a:visited {
+	color: blueviolet;
+}
 .title {
 	position:absolute;
 	top:70%;
@@ -6,7 +15,7 @@
 	min-height:100px;
 	line-height:100px;
 	font-size:64px;
-	background-color:black;
+	background-color:#444444;
 	color:white;
 	text-align:center;
 	border-radius:50px;
