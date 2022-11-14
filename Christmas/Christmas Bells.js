@@ -152,5 +152,5 @@ var Christmas_Bells = [
 	]},
 ];
 
-Song("Christmas Bells", Christmas_Bells, 90, 4);
+Song("Christmas Bells (54)", Christmas_Bells, 90, 4);
 

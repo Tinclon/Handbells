@@ -21,9 +21,11 @@ const Bells = {
 	"e high":	{ "color": "255,240,080", "freq": "659.25" },
 };
 
-const playSounds = false;
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const timeouts = [];
+
+let playSounds = true;
+let showRecurrence = false;
 
 function Note(id, tone, color, name, freq, duration, width, left) {
     this.id = "" + id;
@@ -151,7 +153,8 @@ function Song(title, song, tempo, tempoBeat) {
 		setupBellGuide();
 	};
 
-	const getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}` + " - &#215;" + recurrence[Bell];
+	const getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`
+		+ (showRecurrence ? " - &#215;" + recurrence[Bell] : "");
 
 	const setBellName = e => {
 		const Bell = e.target.id;
@@ -230,7 +233,21 @@ function Song(title, song, tempo, tempoBeat) {
 	tempoVal.setAttribute("id", "tempoVal");
 	tempoVal.setAttribute("class", "tempo tempo_val");
 	tempoVal.innerHTML = tempo;
-	document.getElementById("canvas").appendChild(tempoVal);	
+	document.getElementById("canvas").appendChild(tempoVal);
+
+	// Set up a mute button
+	const muteButton = document.createElement("div");
+	muteButton.setAttribute("id", "mute");
+	muteButton.setAttribute("class", "mute");
+	muteButton.innerHTML = `${playSounds ? "&#128264" :"&#128263" }`;
+	document.getElementById("canvas").appendChild(muteButton);
+
+	// Set up a recurrence button
+	const recurrenceButton = document.createElement("div");
+	recurrenceButton.setAttribute("id", "recurrence");
+	recurrenceButton.setAttribute("class", "recurrence");
+	recurrenceButton.innerHTML = "#";
+	document.getElementById("canvas").appendChild(recurrenceButton);
 
 	// Set up a reset button
 	const resetButton = document.createElement("div");
@@ -272,6 +289,17 @@ function Song(title, song, tempo, tempoBeat) {
 		document.getElementById("tempoVal").innerHTML = tempo;
 	};
 
+	const muteToggle = () => {
+		playSounds = !playSounds;
+		document.getElementById("mute").innerHTML = `${playSounds ? "&#128264" :"&#128263" }`;
+	};
+
+	const recurrenceToggle = () => {
+		showRecurrence = !showRecurrence;
+		clearBellGuide();
+		setupBellGuide();
+	};
+
 	const reset = () => {
 		timeouts.forEach(timeout => clearTimeout(timeout));
 		timeouts.length = 0;
@@ -280,5 +308,7 @@ function Song(title, song, tempo, tempoBeat) {
 	document.getElementById("title").onclick=play;
 	document.getElementById("tempoMinus").onclick=tempoMinus;
 	document.getElementById("tempoPlus").onclick=tempoPlus;
+	document.getElementById("mute").onclick=muteToggle;
+	document.getElementById("recurrence").onclick=recurrenceToggle;
 	document.getElementById("reset").onclick=reset;
 }
