@@ -198,7 +198,7 @@ function Song(title, song, tempo, tempoBeat) {
 
 	const setBellName = e => {
 		const Bell = e.target.id;
-		Bells[Bell].name = prompt("Name:");
+		Bells[Bell].name = prompt("Name:", Bells[Bell].name || "") ?? Bells[Bell].name;
 		e.target.innerHTML = getBellDescription(Bell);
 
 		localStorage.setItem(Bell, Bells[Bell].name);
