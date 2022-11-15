@@ -21,11 +21,39 @@ const Bells = {
 	"e high":	{ "color": "255,240,080", "freq": "659.25" },
 };
 
+const PausableTimer = function(callback, delay, runCallbackOnClear) {
+	let timerId, start, remaining = delay;
+
+	this.pause = () => {
+		window.clearTimeout(timerId);
+		timerId = null;
+		remaining -= Date.now() - start;
+	};
+
+	this.resume = () => {
+		if (timerId || remaining <= 0) {
+			return;
+		}
+
+		start = Date.now();
+		timerId = window.setTimeout(callback, remaining);
+	};
+
+	this.clear = () => {
+		runCallbackOnClear && callback();
+		window.clearTimeout(timerId);
+	}
+
+	this.resume();
+};
+
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const timeouts = [];
+const notes = [];
 
-let playSounds = true;
-let showRecurrence = false;
+let paused = false;
+let playSounds = localStorage.getItem("playSounds") === "true";
+let showRecurrence = localStorage.getItem("showRecurrence") === "true";
 
 function Note(id, tone, color, name, freq, duration, width, left) {
     this.id = "" + id;
@@ -49,7 +77,7 @@ function Note(id, tone, color, name, freq, duration, width, left) {
         note.innerHTML = this.name ? this.name : tone.toUpperCase();
         note.setAttribute("id", this.id);
         note.setAttribute("class", "note");
-        
+
         //noteWrapper.appendChild(note);
         document.getElementById("canvas").appendChild(note);
     };
@@ -60,15 +88,27 @@ function Note(id, tone, color, name, freq, duration, width, left) {
     
         const note = document.getElementById(this.id);
 		note.setAttribute("class", "note animate");
-        setTimeout(this.addFlair.bind(this), 1575);
-        setTimeout(this.playNote.bind(this), 1575);
-        setTimeout(this.erase.bind(this), 3200);
+		this.pausedToggle(paused);
+        timeouts.push(new PausableTimer(this.addFlair.bind(this), 1575));
+		timeouts.push(new PausableTimer(this.playNote.bind(this), 1575));
+		timeouts.push(new PausableTimer(this.erase.bind(this), 3200));
     };
+
+	this.pausedToggle = () => {
+		const note = document.getElementById(this.id);
+		if (note && paused) {
+			note.classList.add("pause");
+			note.classList.remove("run");
+		} else if (note) {
+			note.classList.add("run");
+			note.classList.remove("pause");
+		}
+	}
     
     this.addFlair = () => {
         //const note = document.getElementById(this.id);
         //note.innerHTML = "&#128142; " + note.innerHTML + " &#128142;";
-        setTimeout(this.removeFlair.bind(this), 300);
+        timeouts.push(new PausableTimer(this.removeFlair.bind(this), 300));
     };
     
     this.removeFlair = () => {
@@ -88,18 +128,18 @@ function Note(id, tone, color, name, freq, duration, width, left) {
 		oscillator.frequency.value = freq;
 		if (playSounds) {
 			oscillator.start();
-			setTimeout(this.stopNote.bind(this, gain, oscillator), duration);
+			timeouts.push(new PausableTimer(this.stopNote.bind(this, gain, oscillator), duration, true));
 		}
     };
     
     this.stopNote = (gain, oscillator) => {
-    	gain.gain.value = 0;
-    	setTimeout(() => oscillator.stop(), 100);
+    	gain && (gain.gain.value = 0);
+    	oscillator && timeouts.push(new PausableTimer(() => oscillator.stop(), 100, true));
     };
     
     this.erase = () => {
         const note = document.getElementById(this.id);
-    	note.parentNode.removeChild(note);
+    	note && note.parentNode.removeChild(note);
     	//const noteWrapper = document.getElementById("w" + this.id);
     	//noteWrapper.parentNode.removeChild(noteWrapper);
     };
@@ -235,6 +275,13 @@ function Song(title, song, tempo, tempoBeat) {
 	tempoVal.innerHTML = tempo;
 	document.getElementById("canvas").appendChild(tempoVal);
 
+	// Set up a paused button
+	const pausedButton = document.createElement("div");
+	pausedButton.setAttribute("id", "paused");
+	pausedButton.setAttribute("class", "paused");
+	pausedButton.innerHTML = `${paused ? "unpause" :"pause" }`;
+	document.getElementById("canvas").appendChild(pausedButton);
+
 	// Set up a mute button
 	const muteButton = document.createElement("div");
 	muteButton.setAttribute("id", "mute");
@@ -269,7 +316,8 @@ function Song(title, song, tempo, tempoBeat) {
 						line[part].forEach((note, noteIndex) => {
 							if (note.n !== "r") {
 								const songNote = new Note((lineIndex * 1000) + noteIndex, note.n, Bells[note.n].color, Bells[note.n].name, Bells[note.n].freq, (((note.d * tempoBeat) * (60 / tempo)) * 1000), width, left);
-								timeouts.push(setTimeout(songNote.makeAndAnimate.bind(songNote), noteOffset));
+								notes.push(songNote);
+								timeouts.push(new PausableTimer(songNote.makeAndAnimate.bind(songNote), noteOffset));
 							}
 							noteOffset = noteOffset + (((note.d * tempoBeat) * (60 / tempo)) * 1000);
 						});
@@ -289,25 +337,39 @@ function Song(title, song, tempo, tempoBeat) {
 		document.getElementById("tempoVal").innerHTML = tempo;
 	};
 
+	const pausedToggle = () => {
+		paused = !paused;
+		document.getElementById("paused").innerHTML = `${paused ? "unpause" :"pause" }`;
+		notes.forEach(note => note.pausedToggle());
+		timeouts.forEach(timeout => paused ? timeout.pause() : timeout.resume());
+	}
+
 	const muteToggle = () => {
 		playSounds = !playSounds;
+		localStorage.setItem("playSounds", playSounds);
 		document.getElementById("mute").innerHTML = `${playSounds ? "&#128264" :"&#128263" }`;
 	};
 
 	const recurrenceToggle = () => {
 		showRecurrence = !showRecurrence;
+		localStorage.setItem("showRecurrence", showRecurrence);
 		clearBellGuide();
 		setupBellGuide();
 	};
 
 	const reset = () => {
-		timeouts.forEach(timeout => clearTimeout(timeout));
+		timeouts.forEach(timeout => timeout.clear());
 		timeouts.length = 0;
+		notes.forEach(note => note.stopNote());
+		notes.forEach(note => note.erase());
+		notes.length = 0;
+		paused = true; pausedToggle();
 	};
 	
 	document.getElementById("title").onclick=play;
 	document.getElementById("tempoMinus").onclick=tempoMinus;
 	document.getElementById("tempoPlus").onclick=tempoPlus;
+	document.getElementById("paused").onclick=pausedToggle;
 	document.getElementById("mute").onclick=muteToggle;
 	document.getElementById("recurrence").onclick=recurrenceToggle;
 	document.getElementById("reset").onclick=reset;
