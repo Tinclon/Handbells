@@ -47,6 +47,14 @@ const PausableTimer = function(callback, delay, runCallbackOnClear) {
 	this.resume();
 };
 
+const greenCircle = "&#128994;"; // 🟢
+const redOctagon = "&#128721;";  // 🛑
+const gemStone = "&#128142;"; 	 // 💎
+const bell = "&#128276;";		 // 🔔
+const cross = "&#215;";			 // ×
+const speaker = "&#128264;";	 // 🔈
+const unSpeaker = "&#128263;";	 // 🔇
+
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const timeouts = [];
 const notes = [];
@@ -107,7 +115,7 @@ function Note(id, tone, color, name, freq, duration, width, left) {
     
     this.addFlair = () => {
         //const note = document.getElementById(this.id);
-        //note.innerHTML = "&#128142; " + note.innerHTML + " &#128142;";
+        //note.innerHTML = gemStone + " " + note.innerHTML + " " + gemStone;
         timeouts.push(new PausableTimer(this.removeFlair.bind(this), 300));
     };
     
@@ -147,7 +155,7 @@ function Note(id, tone, color, name, freq, duration, width, left) {
 
 
 function Song(title, song, tempo, tempoBeat) {
-	document.getElementById("title").innerHTML = `&#128276;&nbsp;&nbsp;&nbsp;&nbsp;${title}&nbsp;&nbsp;&nbsp;&nbsp;&#128276;`;
+	document.getElementById("title").innerHTML = `${bell}&nbsp;&nbsp;&nbsp;&nbsp;${title}&nbsp;&nbsp;&nbsp;&nbsp;${bell}`;
 
 	const backAnchor = document.createElement("a");
 	backAnchor.setAttribute("style", "position:absolute");
@@ -194,7 +202,7 @@ function Song(title, song, tempo, tempoBeat) {
 	};
 
 	const getBellDescription = Bell => `${Bell.toUpperCase()}${Bells[Bell].name ? ` - ${Bells[Bell].name}` : ""}`
-		+ (showRecurrence ? " - &#215;" + recurrence[Bell] : "");
+		+ (showRecurrence ? ` - ${cross}` + recurrence[Bell] : "");
 
 	const setBellName = e => {
 		const Bell = e.target.id;
@@ -279,14 +287,14 @@ function Song(title, song, tempo, tempoBeat) {
 	const pausedButton = document.createElement("div");
 	pausedButton.setAttribute("id", "paused");
 	pausedButton.setAttribute("class", "paused");
-	pausedButton.innerHTML = `${paused ? "unpause" :"pause" }`;
+	pausedButton.innerHTML = `${paused ? redOctagon : greenCircle }`;
 	document.getElementById("canvas").appendChild(pausedButton);
 
 	// Set up a mute button
 	const muteButton = document.createElement("div");
 	muteButton.setAttribute("id", "mute");
 	muteButton.setAttribute("class", "mute");
-	muteButton.innerHTML = `${playSounds ? "&#128264" :"&#128263" }`;
+	muteButton.innerHTML = `${playSounds ? speaker : unSpeaker }`;
 	document.getElementById("canvas").appendChild(muteButton);
 
 	// Set up a recurrence button
@@ -339,7 +347,7 @@ function Song(title, song, tempo, tempoBeat) {
 
 	const pausedToggle = () => {
 		paused = !paused;
-		document.getElementById("paused").innerHTML = `${paused ? "unpause" :"pause" }`;
+		document.getElementById("paused").innerHTML = `${paused ? redOctagon : greenCircle }`;
 		notes.forEach(note => note.pausedToggle());
 		timeouts.forEach(timeout => paused ? timeout.pause() : timeout.resume());
 	}
@@ -347,7 +355,7 @@ function Song(title, song, tempo, tempoBeat) {
 	const muteToggle = () => {
 		playSounds = !playSounds;
 		localStorage.setItem("playSounds", playSounds);
-		document.getElementById("mute").innerHTML = `${playSounds ? "&#128264" :"&#128263" }`;
+		document.getElementById("mute").innerHTML = `${playSounds ? speaker : unSpeaker }`;
 	};
 
 	const recurrenceToggle = () => {
