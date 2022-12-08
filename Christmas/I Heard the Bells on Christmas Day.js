@@ -1,6 +1,48 @@
 var I_Heard_the_Bells_on_Christmas_Day = [
+	{ "Harmony 2" : [
+		// I heard the bells on Christmas day
+		{ "n": "r", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
 
-	{ "Harmony" : [
+		// Their old familiar carols play
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "d#", "d": 1/4 },
+		{ "n": "d", "d": 1/4 },
+		{ "n": "d", "d": 1/4 },
+		{ "n": "d", "d": 1/4},
+		{ "n": "d#", "d": 1/4},
+
+		// And wild and sweet the words repeat
+		{ "n": "d#", "d": 1/4 },
+		{ "n": "c", "d": 1/4 },
+		{ "n": "c", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "b low", "d": 1/4 },
+		{ "n": "c", "d": 1/4},
+		{ "n": "c", "d": 1/4},
+
+		// Of peace on earth, good will to men
+		{ "n": "d#", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "c", "d": 1/4 },
+		{ "n": "a# low", "d": 1/4 },
+		{ "n": "r", "d": 1/4 },
+		{ "n": "r", "d": 1/4 },
+		{ "n": "r", "d": 1/4},
+		{ "n": "r", "d": 1/4},
+
+	]},
+	{ "Harmony 1" : [
 		// I heard the bells on Christmas day
 		{ "n": "r", "d": 1/4 },
 		{ "n": "d#", "d": 1/4 + 1/8 },
